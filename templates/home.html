@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+.chats{
+    width: 80vw;
+    height: 70px;
+    background-color: #4158D0;
+background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    border: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 3px;
+    border-radius: 10px;
+    margin-left: 10vw;
+    margin-top: 5px;
+}
+body{
+    background-color: black;
+}
+.chats .data{
+    display: flex;
+    flex-direction: column;
+    margin-right: 50vw;
+}
+.chats .data .user-anim{
+    display: flex;
+    flex-direction: row;
+}
+img{
+    border-radius: 50%;
+    background-size: cover;
+    object-fit: cover;
+    width: 60px;
+    height: 65px;
+    background-repeat: repeat-y;
+    margin-left: 2vw;
+}
+.chats .data .user-anim h1{
+    font-size: 1.2vw;
+    color: white;
+    display: flex;
+}
+.chats .data p{
+    font-size: 1vw;
+    color: rgb(191, 184, 184);
+    font-weight: 500;
+    margin-top: 5px;
+}
+.chats .news{
+    width: 30px;
+    height: 30px;
+    background-color: #F31559;
+    color: bisque;
+    border-radius: 50%;
+    margin-top: 1vw;
+    margin-right: 2vw;
+    padding: 3px;
+    text-align: center;
+}
+.all{
+    color: mediumspringgreen;
+    font-family: sans-serif;
+    font-weight: bold;
+    text-align: center;
+    margin: 1vw;
+    font-size: 1.5vw;
+}
+</style>
+
+<h1 class="all">ALL CONTACTS</h1>
+
+{% for i in users %}
+
+
+    {% if i == request.user %}
+    {% else %}
+        <div class="chats">
+            <img src="{{ i.profile_picture.url }}">
+            <div class="data">
+                <div class="user-anim">
+                    <a href="{% url 'contact' i.id %}"><h1>{{ i.username }}</h1></a>
+                        <div>
+                            <i class="fa-sharp fa-solid fa-circle fa-beat ml-2 mt-1" style="color: #21f263;"></i>
+                        </div>
+                </div>
+                <p>You can messaging with him</p>
+            </div>
+
+            {% for keys, values in dict_count.items %}
+                {% if keys == i %}
+                    {% if values > 0 %}
+                        <div class="news">{{ values }}</div>
+                    {% else %}
+                        <div style="background: none " class="news"></div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+
+    {% endif %}
+
+
+{% endfor %}
+
+{% endblock content %}

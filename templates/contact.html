@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+body{
+    background-color: black;
+}
+
+.chat .data{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 6px;
+    border: 1px solid #7752FE;
+    border-radius: 10px;
+    box-shadow: rgb(167, 92, 237) 0px 10px 30px -10px;
+    margin-bottom: 2vw;
+
+}
+
+.chat .data img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-size: cover;
+    object-fit: cover;
+}
+
+.chat .data h3{
+    color: white;
+    font-family: sans-serif;
+    font-weight: bolder;
+    font-size: 1.7vw;
+
+}
+
+.chat{
+    border-radius: 10px;
+    width: 80vw;
+    background-color: rgba(255, 255, 255, 0.1);
+    min-height: 600px;
+    height: auto;
+    margin-left: 8vw;
+    margin-top: 5vw;
+    padding: 1vw;
+    margin-bottom: 1vw;
+}
+.chat .message{
+    display: flex;
+    flex-direction: row;
+    margin-left: 1vw;
+}
+.chat .message img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-size: cover;
+    object-fit: cover;
+    margin-right: 1vw ;
+}
+
+.chat .message{
+    max-width: 60vw;
+    /* background-color: #7752FE; */
+    margin: 1vw;
+
+}
+
+.text1{
+    border-radius: 10px;
+    padding: 1vw;
+    border: 1px solid #7752FE;
+    box-shadow: rgb(167, 92, 237) 0px 10px 20px -10px;
+
+}
+
+.chat .message p{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1vw;
+    color: white;
+    font-weight: 400;
+    border-radius: 10px;
+
+}
+.chat .message h4{
+    color: #BEADFA;
+    text-align: right;
+    font-size: 0.8vw;
+}
+
+
+
+
+.message1{
+    display: flex;
+    flex-direction: row-reverse;
+    margin-left: 30vw !important;
+    margin-bottom: 1vw;
+}
+.chat .message1 img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-size: cover;
+    object-fit: cover;
+    margin-left: 1vw ;
+}
+
+.chat .message1{
+    max-width: 60vw;
+    /* background-color: #7752FE; */
+    margin: 1vw;
+
+}
+.text{
+    border-radius: 10px;
+    padding: 1vw;
+    border: 1px solid #45FFCA;
+    box-shadow: rgb(92, 237, 232) 0px 10px 20px -10px;
+
+}
+.chat .message1 .text p{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1vw;
+    color: white;
+    font-weight: 400;
+    border-radius: 10px;
+}
+.chat .message1 .text h4{
+    color: rgb(10, 215, 157);
+    text-align: right;
+    font-size: 0.8vw;
+}
+
+
+
+form{
+    width: 80vw;
+    background-color: white;
+    height: 3.3vw;
+    border-radius: 10px 10px 10px 10px;
+    position: fixed;
+    margin-top: 26vw;
+    margin-left: -1vw;
+    display: flex;
+    flex-direction: row;
+
+}
+form a{
+    width: 10vw;
+    border-radius: 10px 0 0 10px;
+    text-align: center;
+    color: #3120E0;
+    padding-top: 8px;
+    font-size: 1.3vw;
+}
+form a:hover{
+    color: #655be1;
+    font-weight: bold;
+    transition: 0s ease-in-out;
+}
+
+form input{
+    width: 65vw;
+    outline: teal;
+    height: 3.3vw;
+    margin-bottom: 0.7vw;
+    border: none;
+    padding-left: 1vw;
+    background-color: #5D5D5D;
+    color: #00FFAB;
+    border-radius: 0 0 10px 10px;
+}
+form button i{
+    border-radius: 0 0 10px 10px;
+    color: #5800FF;
+}
+.last{
+    width: 200px;
+    height: 70px;
+}
+</style>
+
+
+{#    {% for i in message %}#}
+{#        {% if i.sender == request.user %}#}
+{#            <h3 style="color: mediumpurple">{{ i.text }}</h3>#}
+{#        {% else %}#}
+{#            <h3 style="color: mediumspringgreen">{{ i.text }}</h3>#}
+{#        {% endif %}#}
+{#    {% endfor %}#}
+
+
+
+    <div class="chat">
+        <div id="top" class="data">
+            <img src="{{ user.profile_picture.url }}">
+            <i style="color: #9400FF;" class="mt-4 mr-3 fa-sharp fa-solid fa-circle fa-beat-fade"></i>
+            <h3 class="mt-3">{{ user.username }}</h3>
+        </div>
+
+
+        <form class="position-fixed" method="post" action="{% url 'message' user.id %}">
+            {% csrf_token %}
+            <a href="{% url 'home' %}">Back to home </a>
+
+            {{ messages_form.text }}
+
+            <button type="submit"><i class="ml-3 fa-sharp fa-solid fa-paper-plane fa-2xl"></i></button>
+
+        </form>
+
+        <a href="#top"><i style="color: white; margin-left: 80vw; position: fixed; margin-top: 25vw" class="fa-solid fa-arrow-up fa-2xl"></i></a>
+        <a href="#last"><i style="color: white; margin-left: 80vw; position: fixed; margin-top: 27.5vw" class="fa-sharp fa-solid fa-2xl fa-arrow-down"></i></a>
+
+
+
+
+        {% for i in message %}
+        {% if i.sender == request.user %}
+            <div class="message">
+                <img src="{{ request.user.profile_picture.url }}">
+                <div class="text1">
+                    <p>{{ i.text }}</p>
+                    <h4 class="mt-2">{{ i.created_time|date:"H:i | d-M | Y" }}</h4>
+                    {% if i.send_status == 'sending' %}
+                        <i style="float: right; color: #EC53B0" class="mt-3 fa-solid fa-check"></i>
+                    {% else %}
+{#                        <i style="float: right; color: #EC53B0" class="bi bi-check2-all"></i>#}
+                        <svg style="float: right; color: #EC53B0" xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-check2-all mt-3" viewBox="0 0 16 16">
+                          <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l7-7zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0z"/>
+                          <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"/>
+                        </svg>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <div class="message1">
+                <img src="{{ user.profile_picture.url }}">
+                <div class="text">
+                    <p>{{ i.text }}</p>
+                    <h4 class="mt-2">{{ i.created_time|date:"H:i | d-M | Y" }}</h4>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    </div>
+
+
+
+
+    <div id="last" class="last">
+
+    </div>
+
+
+
+{% endblock content %}
