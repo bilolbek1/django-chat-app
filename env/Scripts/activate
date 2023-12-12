@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="D:\DJANGO\chat-application\env"
+VIRTUAL_ENV="D:\Projects\chat-application\env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
